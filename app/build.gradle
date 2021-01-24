@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
@@ -12,6 +14,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -23,15 +26,73 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
+    def matVer = "1.3.0-rc01"
+    def nav_version = "2.3.2"
+    def retrofitVer = "2.9.0"
+    def kotMoVer = "1.11.0"
+    def hiltVer = "2.28-alpha"
+    def hiltJetpack = "1.0.0-alpha01"
+    def glideVer = "4.11.0"
+    def multidex_version = "2.0.1"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // google material design
+    implementation "com.google.android.material:material:$matVer"
+
+    // google navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVer"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVer"
+
+    // kotlin moshi
+    implementation "com.squareup.moshi:moshi-kotlin:$kotMoVer"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$kotMoVer"
+
+    // rxjava
+    implementation "io.reactivex.rxjava3:rxjava:3.0.9"
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$hiltVer"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVer"
+    // hilt jetpack
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltJetpack"
+    kapt "androidx.hilt:hilt-compiler:$hiltJetpack"
+
+    // okhttp logging interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:$glideVer"
+    kapt "com.github.bumptech.glide:compiler:$glideVer"
+
+    implementation "androidx.multidex:multidex:$multidex_version"
 }
